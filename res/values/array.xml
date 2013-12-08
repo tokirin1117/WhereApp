@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
  <string-array name="search_category">
+        <item>없음</item>
         <item>지역정보</item>
         <item>맛집추천</item>
         <item>데이트코스</item>
         <item>대중교통</item>
-        <item>없음</item>
     </string-array>
 </resources>
