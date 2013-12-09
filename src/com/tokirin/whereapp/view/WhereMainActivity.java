@@ -3,11 +3,15 @@ package com.tokirin.whereapp.view;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import org.json.JSONObject;
+
+import com.google.gson.Gson;
 import com.tokirin.whereapp.R;
 import com.tokirin.whereapp.R.id;
 import com.tokirin.whereapp.R.layout;
 import com.tokirin.whereapp.R.menu;
 import com.tokirin.whereapp.R.string;
+import com.tokirin.whereapp.model.User;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
@@ -53,10 +57,11 @@ public class WhereMainActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		Intent intent = this.getIntent();
-		String id = intent.getStringExtra("id");
+		String info = intent.getStringExtra("info");
+		User user = new Gson().fromJson(info, User.class);
 		mainBar = (TextView)findViewById(R.id.main_bar);
 		
-		mainBar.setText(id +"님 환영합니다! 로그인 시각은 " + getTime() + " 입니다");
+		mainBar.setText(user.id +"님 환영합니다! 로그인 시각은 " + getTime() + " 입니다");
 		
 		
 		// Set up the action bar.
