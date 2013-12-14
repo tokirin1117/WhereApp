@@ -101,6 +101,7 @@ public class WhereHttpRequest extends AsyncTask<Void, Void, HttpResponse> {
 			mPost.addHeader(new BasicHeader("Content-Type","application/json"));
 			mPost.setEntity(new StringEntity(jsonBody.toString()));
 			HttpResponse response = client.execute(mPost);
+			responseContent = response.getStatusLine().getReasonPhrase();
 			return response;
 		}catch(Exception e){
 			e.printStackTrace();

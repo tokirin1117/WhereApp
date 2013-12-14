@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="#00ffffff">
+    <RelativeLayout
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+        >
+        
+        <ImageView
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="5dip"
+            android:layout_marginLeft="5dip"
+            android:id="@+id/sender_image"
+            android:layout_width="50dip"
+	        android:layout_height="50dip"
+	        android:background="#ff555555"
+	        />
+	        
+	    <TextView
+	        android:layout_below="@+id/sender_image"
+	        android:layout_marginTop="5dip"
+	        android:layout_marginLeft="10dip"
+	        android:id="@+id/sender_id"
+	        android:layout_width="wrap_content"
+	        android:layout_height="30dip"
+	        android:text="Sender"
+	        />
+	        
+	    <TextView
+	        android:id="@+id/sender_text"
+	        android:layout_toRightOf="@+id/sender_image"
+	        android:layout_width="wrap_content"
+	        android:maxWidth="200dip"
+	        android:layout_marginTop="15dip"
+	        android:layout_marginLeft="5dip"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/bubble_receive"
+	        android:text = "Not sdasdasdassssssssssssssssssssssssssss"
+			/>
+	    <TextView 
+	        android:id="@+id/sender_timestamp"
+	        android:textSize="8dip"
+	        android:textColor="#ff999999"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="13/12/13 9:05 PM"
+	        android:layout_below="@+id/sender_text"
+	        android:layout_alignLeft="@+id/sender_text"
+	        android:layout_marginLeft="10dip"
+	        android:layout_marginTop="3dip"
+	        />
+	        
+	    
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="#00ffffff">
+    <RelativeLayout
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+        >
+        
+        <ImageView
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="15dip"
+            android:layout_marginRight="5dip"
+            android:id="@+id/receiver_image"
+            android:layout_width="50dip"
+	        android:layout_height="50dip"
+	        android:background="#ff555555"
+	        />
+	        
+	    <TextView
+	        android:layout_below="@+id/receiver_image"
+	        android:layout_marginTop="5dip"
+	        
+	        android:layout_alignRight="@+id/receiver_image"
+	        android:id="@+id/receiver_id"
+	        android:layout_width="wrap_content"
+	        android:layout_height="30dip"
+	        android:text="receiver"
+	        />
+	        
+	    <TextView
+	        android:id="@+id/receiver_text"
+	        android:layout_toLeftOf="@+id/receiver_image"
+	        android:layout_width="wrap_content"
+	        android:maxWidth="200dip"
+	        android:layout_marginTop="5dip"
+	        android:layout_marginRight="5dip"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/bubble_send"
+	        android:text = "Not sdasdasdassssssssssssssssssssssssssss"
+			/>
+	    <TextView 
+	        android:id="@+id/receiver_timestamp"
+	        android:textSize="8dip"
+	        android:textColor="#ff999999"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="13/12/13 9:05 PM"
+	        android:layout_below="@+id/receiver_text"
+	        android:layout_alignRight="@+id/receiver_text"
+	        android:layout_marginRight="10dip"
+	        android:layout_marginTop="3dip"
+	        />
+	        
+	    
+    </RelativeLayout>
+
+</LinearLayout>

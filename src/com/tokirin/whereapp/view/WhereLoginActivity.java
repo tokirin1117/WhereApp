@@ -3,8 +3,12 @@ package com.tokirin.whereapp.view;
 import java.util.HashMap;
 
 import org.apache.http.HttpResponse;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import com.google.gson.JsonObject;
 import com.tokirin.whereapp.R;
+import com.tokirin.whereapp.lib.Global;
 import com.tokirin.whereapp.lib.WhereHttpRequest;
 import com.tokirin.whereapp.lib.WhereHttpRequest.Callback;
 
@@ -56,10 +60,15 @@ public class WhereLoginActivity extends Activity {
 				String pwd = pwdText.getText().toString();
 				Log.d("Login","get id,pwd");
 				HashMap<String,String> params = new HashMap();
-				params.put("id", id);
-				params.put("pwd", pwd);
+				JSONObject json = new JSONObject();
+				
+				try {
+					json.put("id", id);
+					json.put("pwd", pwd);
+				} catch (JSONException e) {}
+				
 				Log.d("Login","put id,pwd");
-				final WhereHttpRequest req = new WhereHttpRequest("POST","http://192.168.100.28:8920/login",params);
+				final WhereHttpRequest req = new WhereHttpRequest("POST_JSON",Global.host + ":" + Global.port + "/login",json);
 				req.addObserver(new Callback(){
 					@Override
 					public void onSuccess(HttpResponse response) {

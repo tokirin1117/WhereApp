@@ -11,7 +11,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.tokirin.whereapp.R;
+import com.tokirin.whereapp.lib.Global;
 import com.tokirin.whereapp.lib.WhereHttpRequest;
 import com.tokirin.whereapp.lib.WhereHttpRequest.Callback;
 
@@ -149,7 +151,9 @@ public class WhereJoinActivity extends Activity {
 				
 				JSONArray arrFavorite = new JSONArray();
 				for(HashMap<String,Double> loc : location){
-					arrFavorite.put(new Gson().toJson(loc));
+					try {
+						arrFavorite.put(new JSONObject(new Gson().toJson(loc)));
+					} catch (JSONException e) {}
 				}
 				
 				if(!pwd.equals(pwd_confirm)){
@@ -158,11 +162,11 @@ public class WhereJoinActivity extends Activity {
 					try {
 						info.put("id", email);
 						info.put("password",pwd);
-						info.put("residence", new Gson().toJson(residence));
+						info.put("residence",new JSONObject(new Gson().toJson(residence)));
 						info.put("category", arrCategory);
 						info.put("favorite", arrFavorite);
 						
-						WhereHttpRequest req = new WhereHttpRequest("POST_JSON","http://192.168.100.28:8920/join",info);
+						WhereHttpRequest req = new WhereHttpRequest("POST_JSON",Global.host + ":" + Global.port + "/join",info);
 						
 						req.addObserver(new Callback(){
 							@Override
