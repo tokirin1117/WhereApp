@@ -1,7 +1,7 @@
 package com.tokirin.whereapp.view;
 
 import com.tokirin.whereapp.R;
-import com.tokirin.whereapp.R.layout;
+import com.tokirin.whereapp.model.Info;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -17,9 +17,10 @@ public class WhereSettingActivity extends Fragment {
 	
 
 	Context mContext;
-	
-	public WhereSettingActivity(Context context) {
+	Info user;
+	public WhereSettingActivity(Context context,Info user) {
 		mContext = context;
+		this.user = user;
 	}
 	
 	@Override

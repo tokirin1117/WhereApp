@@ -2,8 +2,8 @@ package com.tokirin.whereapp.model;
 
 public class Location {
 	
-	public long latitude;
-	public long longitude;
+	public String latitude;
+	public String longitude;
 	
 
 }

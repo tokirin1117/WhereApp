@@ -14,8 +14,10 @@ import org.apache.http.HttpResponse;
 
 
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -23,6 +25,8 @@ import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpParams;
 import org.json.JSONObject;
+
+import com.google.gson.JsonObject;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -33,7 +37,8 @@ public class WhereHttpRequest extends AsyncTask<Void, Void, HttpResponse> {
 	public String url;
 	public HashMap<String,String> params;
 	public JSONObject jsonBody;
-	public String responseContent;
+	public String responseMessage;
+	public String responseBody;
 	public interface Callback {
         void onSuccess(HttpResponse response);
         void onFailure(HttpResponse response);
@@ -72,7 +77,15 @@ public class WhereHttpRequest extends AsyncTask<Void, Void, HttpResponse> {
 			Log.d("Login","POST REQUEST start");
 			HttpResponse response = post();
 			return response;
+		}else if(method.equals("GET")){
+			HttpResponse response = null;
+			try {
+				response = _get();
+			} catch (ClientProtocolException e) {} catch (IOException e) {}
+			return response;
+			
 		}
+				
 		
 		return null;
 	}
@@ -98,11 +111,23 @@ public class WhereHttpRequest extends AsyncTask<Void, Void, HttpResponse> {
 		try{
 			HttpClient client =  new DefaultHttpClient();
 			HttpPost mPost = new HttpPost(url);
-			mPost.addHeader(new BasicHeader("Content-Type","application/json"));
-			mPost.setEntity(new StringEntity(jsonBody.toString()));
+			mPost.addHeader(new BasicHeader("Content-Type","application/json; charset=utf-8"));
+			mPost.setEntity(new StringEntity(jsonBody.toString(),"utf-8"));
 			HttpResponse response = client.execute(mPost);
-			responseContent = response.getStatusLine().getReasonPhrase();
+			
+			InputStream is = response.getEntity().getContent();
+			StringBuffer buffer = new StringBuffer();
+			int i;
+			byte[] b = new byte[4096];
+			while( (i = is.read(b)) != -1){
+			 buffer.append(new String(b, 0, i));
+			}
+			String str = buffer.toString();
+			Log.d("ResponseBody",str);
+			responseBody = str;
+			responseMessage = response.getStatusLine().getReasonPhrase();
 			return response;
+			
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;
@@ -125,8 +150,8 @@ public class WhereHttpRequest extends AsyncTask<Void, Void, HttpResponse> {
             mPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "utf-8"));
             
 			HttpResponse response = client.execute(mPost);
-			responseContent = response.getStatusLine().getReasonPhrase();
-			Log.d("Login",responseContent);
+			responseMessage = response.getStatusLine().getReasonPhrase();
+			Log.d("Login",responseMessage);
 			return response;
 		}catch(Exception e){
 			e.printStackTrace();
@@ -135,6 +160,25 @@ public class WhereHttpRequest extends AsyncTask<Void, Void, HttpResponse> {
 		
 	}
 
+	public HttpResponse _get() throws ClientProtocolException, IOException{
+		HttpClient client =  new DefaultHttpClient();
+		HttpGet mGet = new HttpGet(url);
+		HttpResponse response = client.execute(mGet);
+		InputStream is = response.getEntity().getContent();
+		StringBuffer buffer = new StringBuffer();
+		int i;
+		byte[] b = new byte[4096];
+		while( (i = is.read(b)) != -1){
+		 buffer.append(new String(b, 0, i));
+		}
+		String str = buffer.toString();
+		Log.d("ResponseBody",str);
+		responseBody = str;
+		responseMessage = response.getStatusLine().getReasonPhrase();
+		return response;
+		
+	}
+	
 	public static String convertStreamToString(InputStream is) {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 		StringBuilder sb = new StringBuilder();

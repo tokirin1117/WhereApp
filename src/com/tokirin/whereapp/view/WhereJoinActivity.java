@@ -3,15 +3,12 @@ package com.tokirin.whereapp.view;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Set;
-
 import org.apache.http.HttpResponse;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.tokirin.whereapp.R;
 import com.tokirin.whereapp.lib.Global;
 import com.tokirin.whereapp.lib.WhereHttpRequest;
@@ -26,7 +23,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
@@ -51,8 +47,8 @@ public class WhereJoinActivity extends Activity {
 	
 	Context mContext;
 	HashSet<Integer> category = new HashSet<Integer>();
-	HashMap<String,Double> residence = new HashMap<String, Double>();
-	ArrayList<HashMap<String,Double>> location = new ArrayList<HashMap<String,Double>>();
+	HashMap<String,String> residence = new HashMap<String, String>();
+	ArrayList<HashMap<String,String>> location = new ArrayList<HashMap<String,String>>();
 	
 	final int RESIDENCE = 1;
 	final int FAVORITE1 = 2;
@@ -150,7 +146,7 @@ public class WhereJoinActivity extends Activity {
 				}
 				
 				JSONArray arrFavorite = new JSONArray();
-				for(HashMap<String,Double> loc : location){
+				for(HashMap<String,String> loc : location){
 					try {
 						arrFavorite.put(new JSONObject(new Gson().toJson(loc)));
 					} catch (JSONException e) {}
@@ -165,8 +161,9 @@ public class WhereJoinActivity extends Activity {
 						info.put("residence",new JSONObject(new Gson().toJson(residence)));
 						info.put("category", arrCategory);
 						info.put("favorite", arrFavorite);
-						
-						WhereHttpRequest req = new WhereHttpRequest("POST_JSON",Global.host + ":" + Global.port + "/join",info);
+						info.put("mobileKey", Global.mobileKey);
+						info.put("rad", Global.rad);
+						WhereHttpRequest req = new WhereHttpRequest("POST_JSON",Global.appHost + ":" + Global.appPort + "/join",info);
 						
 						req.addObserver(new Callback(){
 							@Override
@@ -211,8 +208,8 @@ public class WhereJoinActivity extends Activity {
 					double lat = data.getDoubleExtra("latitude", 300.00);
 					double lng = data.getDoubleExtra("longitude", 300.00);
 					
-					residence.put("latitude", lat);
-					residence.put("longitude", lng);
+					residence.put("latitude", Double.toString(lat));
+					residence.put("longitude", Double.toString(lng));
 					residenceBtn.setText("위치가 설정되었습니다");
 				}else{}
 				break;
@@ -220,9 +217,11 @@ public class WhereJoinActivity extends Activity {
 				if(resultCode == RESULT_OK){
 					double lat = data.getDoubleExtra("latitude", 300.00);
 					double lng = data.getDoubleExtra("longitude", 300.00);
-					HashMap<String,Double> temp = new HashMap();
-					temp.put("latitude", lat);
-					temp.put("longitude", lng);
+					
+					
+					HashMap<String,String> temp = new HashMap();
+					temp.put("latitude", Double.toString(lat));
+					temp.put("longitude", Double.toString(lng));
 					location.add(temp);
 					favorBtn1.setText("위치가 설정되었습니다");
 				}else{}
@@ -231,9 +230,9 @@ public class WhereJoinActivity extends Activity {
 				if(resultCode == RESULT_OK){
 					double lat = data.getDoubleExtra("latitude", 300.00);
 					double lng = data.getDoubleExtra("longitude", 300.00);
-					HashMap<String,Double> temp = new HashMap();
-					temp.put("latitude", lat);
-					temp.put("longitude", lng);
+					HashMap<String,String> temp = new HashMap();
+					temp.put("latitude", Double.toString(lat));
+					temp.put("longitude", Double.toString(lng));
 					location.add(temp);
 					favorBtn2.setText("위치가 설정되었습니다");
 				}else{}
@@ -242,9 +241,9 @@ public class WhereJoinActivity extends Activity {
 				if(resultCode == RESULT_OK){
 					double lat = data.getDoubleExtra("latitude", 300.00);
 					double lng = data.getDoubleExtra("longitude", 300.00);
-					HashMap<String,Double> temp = new HashMap();
-					temp.put("latitude", lat);
-					temp.put("longitude", lng);
+					HashMap<String,String> temp = new HashMap();
+					temp.put("latitude", Double.toString(lat));
+					temp.put("longitude", Double.toString(lng));
 					location.add(temp);
 					favorBtn3.setText("위치가 설정되었습니다");
 				}else{}

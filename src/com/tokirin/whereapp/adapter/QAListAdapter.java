@@ -4,13 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
+
 import com.tokirin.whereapp.R;
 import com.tokirin.whereapp.model.QA;
+import com.tokirin.whereapp.view.WhereChatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
@@ -34,7 +39,7 @@ public class QAListAdapter extends ArrayAdapter<QA> {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		QA myQA = qaArrayList.get(position);
+		final QA myQA = qaArrayList.get(position);
 		if(myQA==null){
 			Log.d("Question","QA is null");
 		}
@@ -52,12 +57,9 @@ public class QAListAdapter extends ArrayAdapter<QA> {
 			holder = (QAholder)convertView.getTag();
 		}
 		
-		holder.qa_time.setText(myQA.qa_date);
-		Log.d("Question",myQA.qa_date);
-		holder.qa_question.setText(myQA.qa_question);
-		Log.d("Question",myQA.qa_question);
-		holder.qa_answer.setText(myQA.qa_answer);
-		Log.d("Question",myQA.qa_answer);
+		holder.qa_time.setText(myQA.time);
+		holder.qa_question.setText(myQA.question);
+		holder.qa_answer.setText(myQA.answer);
 		
 		return convertView;
 	}

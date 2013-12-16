@@ -28,6 +28,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="30dip"
 	        android:text="Sender"
+	        android:textColor="#ff000000"
 	        />
 	        
 	    <TextView
@@ -40,6 +41,7 @@
 	        android:layout_height="wrap_content"
 	        android:background="@drawable/bubble_receive"
 	        android:text = "Not sdasdasdassssssssssssssssssssssssssss"
+	        android:textColor="#ff000000"
 			/>
 	    <TextView 
 	        android:id="@+id/sender_timestamp"

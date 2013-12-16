@@ -3,15 +3,15 @@ package com.tokirin.whereapp.view;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-import org.json.JSONObject;
 
+
+
+
+import com.google.android.gcm.GCMRegistrar;
 import com.google.gson.Gson;
 import com.tokirin.whereapp.R;
-import com.tokirin.whereapp.R.id;
-import com.tokirin.whereapp.R.layout;
-import com.tokirin.whereapp.R.menu;
-import com.tokirin.whereapp.R.string;
-import com.tokirin.whereapp.model.User;
+import com.tokirin.whereapp.lib.Global;
+import com.tokirin.whereapp.model.Info;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
@@ -22,16 +22,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
-import android.text.format.DateFormat;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.TextView;
 
 public class WhereMainActivity extends FragmentActivity implements
@@ -52,17 +48,21 @@ public class WhereMainActivity extends FragmentActivity implements
 	 */
 	ViewPager mViewPager;
 	TextView mainBar;
+	Info user;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		Intent intent = this.getIntent();
 		String info = intent.getStringExtra("info");
-		User user = new Gson().fromJson(info, User.class);
+		user = new Gson().fromJson(info, Info.class);
+		user.mobileKey = Global.mobileKey;
+		Global.id = user.id;
+		Global.isLogin = true;
+		
 		mainBar = (TextView)findViewById(R.id.main_bar);
 		
 		mainBar.setText(user.id +"님 환영합니다! 로그인 시각은 " + getTime() + " 입니다");
-		
 		
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
@@ -77,7 +77,7 @@ public class WhereMainActivity extends FragmentActivity implements
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
-
+		mViewPager.setOffscreenPageLimit(3);
 		// When swiping between different sections, select the corresponding
 		// tab. We can also use ActionBar.Tab#select() to do this if we have
 		// a reference to the Tab.
@@ -143,11 +143,11 @@ public class WhereMainActivity extends FragmentActivity implements
 		public Fragment getItem(int position) {
 			switch(position) {
 			case 0:
-				return new WhereQuestionActivity(mContext);
+				return new WhereQuestionActivity(mContext,user);
 			case 1:
-				return new WhereAnswerActivity(mContext);
+				return new WhereAnswerActivity(mContext,user);
 			case 2:
-				return new WhereSettingActivity(mContext);
+				return new WhereSettingActivity(mContext,user);
 		}
 		return null;
 		}
@@ -207,4 +207,14 @@ public class WhereMainActivity extends FragmentActivity implements
 		today = df.format(todayMillis);
 		return today;
 	}
+
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		Global.isLogin = false;
+		finish();
+		super.onBackPressed();
+	}
+	
+	
 }

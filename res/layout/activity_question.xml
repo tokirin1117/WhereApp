@@ -7,7 +7,6 @@
 
     
     <LinearLayout
-        android:id = "@+id/search_layout"
         android:orientation="horizontal"
         android:layout_width = "match_parent"
         android:layout_height = "50dip"
@@ -16,14 +15,31 @@
         <Spinner
             android:id = "@+id/search_spinner"
             android:layout_width="0dp"
-            android:layout_weight="2"
+            android:layout_weight="5"
             android:layout_height="match_parent"
+            android:gravity="center"
             />
         
+        <Button
+            android:id = "@+id/search_location"
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:layout_height="match_parent"
+            android:text = "위치설정"
+            />
+        
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width = "match_parent"
+        android:layout_height = "50dip"
+        >
         <EditText 
         	android:id = "@+id/search_query"
             android:layout_width="0dp"
-            android:layout_weight="6"
+            android:layout_weight="7"
         	android:layout_height = "match_parent"
         	android:hint = "질문할 문구를 입력해주세요"
             />
@@ -32,17 +48,19 @@
         <Button
             android:id = "@+id/search_submit"
             android:layout_width="0dp"
-            android:layout_weight="2"
+            android:layout_weight="3"
             android:layout_height="match_parent"
-            android:text = "검색"
+            android:text = "where?"
             />
         
     </LinearLayout>
+    
     
     <ListView
         android:id="@+id/qa_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+	    android:divider="#00000000"
         />
     
     

@@ -5,5 +5,18 @@
     android:layout_height="match_parent"
     tools:context=".WhereAnswerActivity" >
     
+    <Button
+        android:id="@+id/answer_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:text = "새로고침"
+        />
+    <ListView
+        android:id="@+id/answer_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+	    android:divider="#00000000"
+        />
+    
 
 </LinearLayout>

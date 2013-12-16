@@ -6,6 +6,7 @@ import org.apache.http.HttpResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.android.gcm.GCMRegistrar;
 import com.google.gson.JsonObject;
 import com.tokirin.whereapp.R;
 import com.tokirin.whereapp.lib.Global;
@@ -34,6 +35,16 @@ public class WhereLoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		try{
+			GCMRegistrar.checkDevice(this);
+			GCMRegistrar.checkManifest(this);
+			final String regId = GCMRegistrar.getRegistrationId(this);
+			if("".equals(regId)) GCMRegistrar.register(this, "573108739764");
+			else Log.d("==============", regId);
+			Global.mobileKey = regId;
+		}catch(Exception e){
+			Global.mobileKey = "none";
+		}
 		
 		mContext = this.getBaseContext();
 		loginBtn = (Button)findViewById(R.id.login_button);
@@ -68,12 +79,12 @@ public class WhereLoginActivity extends Activity {
 				} catch (JSONException e) {}
 				
 				Log.d("Login","put id,pwd");
-				final WhereHttpRequest req = new WhereHttpRequest("POST_JSON",Global.host + ":" + Global.port + "/login",json);
+				final WhereHttpRequest req = new WhereHttpRequest("POST_JSON",Global.appHost + ":" + Global.appPort + "/login",json);
 				req.addObserver(new Callback(){
 					@Override
 					public void onSuccess(HttpResponse response) {
 						Log.d("Login","Login success");
-						String info = req.responseContent;
+						String info = response.getStatusLine().getReasonPhrase();
 						Intent intent = new Intent(mContext,WhereMainActivity.class);
 						intent.putExtra("info", info);
 						startActivity(intent);

@@ -14,6 +14,25 @@
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 	<uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
 	<uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.VIBRATE" />
+	<permission android:name="com.tokirin.whereapp.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+	<uses-permission android:name="com.tokirin.whereapp.permission.C2D_MESSAGE" /> 
+	
+	<!-- GCM messages 수신하기 위해서 -->
+	
+	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+	
+	<!-- 인터넷 접속 -->
+	
+	<uses-permission android:name="android.permission.INTERNET" /> 
+	
+	<!-- 구글계정 접근 -->
+	
+	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+	
+	<!-- 메시지 수신하려면 절전모드로 가면 안됨 -->
+	
+	<uses-permission android:name="android.permission.WAKE_LOCK" />
 	
     <application
         android:allowBackup="true"
@@ -42,8 +61,18 @@
         <activity
             android:name = "com.tokirin.whereapp.view.WhereChatActivity"
             android:theme="@android:style/Theme.NoTitleBar" />
-        
-        <meta-data android:value="AIzaSyDICQpSgiW7lJ6M3y5AoWwyTdoZ4qxTCfA" android:name="com.google.android.maps.v2.API_KEY"/>
+		<!-- GCM 리시버 -->
+		<receiver
+		   android:name="com.google.android.gcm.GCMBroadcastReceiver"
+		   android:permission="com.google.android.c2dm.permission.SEND" >
+		   <intent-filter>
+		      <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+		      <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+		      <category android:name="com.tokirin.whereapp" /> <!-- 젤리빈 부터는 category 빼도 된다 -->
+		   </intent-filter>
+		</receiver>
+		<service android:name=".GCMIntentService" />
+		<meta-data android:value="AIzaSyDICQpSgiW7lJ6M3y5AoWwyTdoZ4qxTCfA" android:name="com.google.android.maps.v2.API_KEY"/>
     </application>
 
 </manifest>

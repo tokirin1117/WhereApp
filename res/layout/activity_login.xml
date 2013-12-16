@@ -20,7 +20,7 @@
         android:layout_height="50dip"
         android:layout_gravity="center"
         android:layout_marginTop="10dip"
-        android:hint = "E-mail"
+        android:hint = "ID"
         />
     
     <EditText

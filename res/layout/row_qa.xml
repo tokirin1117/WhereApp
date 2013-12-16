@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:maxWidth="200dip"
         android:background="@drawable/bubble_send"
-        android:text="Sample Answer~~~~~~~~~~~~~~~~~~"
+        android:text="답변 대기중"
         />
     
 

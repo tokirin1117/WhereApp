@@ -2,7 +2,9 @@ package com.tokirin.whereapp.model;
 
 public class QA {
 
-	public String qa_date;
-	public String qa_question;
-	public String qa_answer;
+	public String owner;
+	public String hash;
+	public String question;
+	public String time;
+	public String answer = "답변 대기중";
 }
